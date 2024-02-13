@@ -304,6 +304,7 @@ func (e *TaskEngine) pollerTryAllWork() {
 	}
 	// if no work was accepted, are we bored? Then find work in priority order.
 	for _, v := range e.handlers {
+		v := v
 		if v.AssertMachineHasCapacity() != nil {
 			continue
 		}
