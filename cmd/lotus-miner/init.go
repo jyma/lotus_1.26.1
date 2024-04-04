@@ -129,6 +129,11 @@ var initCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		log.Info("Initializing lotus miner")
 
+		os.Setenv("LOTUS_WINDOW_POST", "true")
+		os.Setenv("LOTUS_WINNING_POST", "true")
+		os.Setenv("LOTUS_WDPOST", "false")
+		os.Setenv("LOTUS_WNPOST", "false")
+		
 		ssize, err := abi.RegisteredSealProof_StackedDrg32GiBV1.SectorSize()
 		if err != nil {
 			return xerrors.Errorf("failed to calculate default sector size: %w", err)

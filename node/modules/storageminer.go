@@ -323,7 +323,18 @@ func WindowPostScheduler(fc config.MinerFeeConfig, pc config.ProvingConfig) func
 
 		lc.Append(fx.Hook{
 			OnStart: func(context.Context) error {
-				go fps.Run(ctx)
+				if _, ok := os.LookupEnv("LOTUS_WINDOW_POST"); ok {
+					log.Warnf("This miner will do windowPoSt")
+					go fps.Run(ctx)
+				} else {
+					if _, ok2 := os.LookupEnv("LOTUS_WDPOST"); ok2 {
+						log.Warnf("This miner will do windowPoSt")
+						go fps.Run(ctx)
+					} else {
+						log.Warnf("This miner will be disable windowPoSt.")
+					}
+					//log.Warnf("This miner will be disabled windowPoSt")
+				}
 				return nil
 			},
 		})
